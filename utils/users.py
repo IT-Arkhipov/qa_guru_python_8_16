@@ -19,9 +19,9 @@ class User:
 
 
 user = User(
-    first_name='FirstName',
-    last_name='LastName',
-    email='mymail@test.ru',
+    first_name='Michael',
+    last_name='Delp',
+    email='MichaelDDelp@teleworm.us',
     gender='Male',
     phone='9170770905',
     date='11 Oct 2023',
