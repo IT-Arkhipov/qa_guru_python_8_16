@@ -8,22 +8,39 @@ import pytest
 from selene import browser
 from selenium import webdriver
 
+from page.sign_in import sign_in
 
-@pytest.fixture()
-def browser_config():
+
+@pytest.fixture(params=[(2560, 1440), (1920, 1080), (414, 896), (430, 932)],
+                ids=['2560, 1440', '1920, 1080', '414, 896', '430, 932'])
+def browser_config(request):
+    width, height = request.param
     browser.config.driver = webdriver.Chrome()
-    browser.config.window_width = 1920
-    browser.config.window_height = 1080
+    browser.config.window_width = width
+    browser.config.window_height = height
 
     yield
 
     browser.quit()
 
 
-def test_github_desktop(browser_config):
+@pytest.fixture()
+def is_desktop(browser_config):
+    if (browser.config.window_width, browser.config.window_height) in ((2560, 1440), (1920, 1080)):
+        return True
+    else:
+        return False
+
+
+def test_github_desktop(is_desktop):
+    if not is_desktop:
+        pytest.skip('Not a desktop window resolution')
     browser.open('https://github.com')
-    time.sleep(1)
+    sign_in.desktop_sign_in()
 
 
-def test_github_mobile(browser_config):
-    pass
+def test_github_mobile(is_desktop):
+    if is_desktop:
+        pytest.skip('Not a mobile window resolution')
+    browser.open('https://github.com')
+    sign_in.mobile_sign_in()
