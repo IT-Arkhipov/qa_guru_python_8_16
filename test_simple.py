@@ -38,13 +38,13 @@ def is_macos():
     return True
 
 
-# @pytest.mark.skipif(is_macos)
+@pytest.mark.skipif(is_macos)
 def test_third(is_macos):
     if is_macos:
         pytest.skip(reason="Не запускается на macos")
 
 
-# @pytest.mark.xfail(reason="протсо потому что")
+# @pytest.mark.xfail(reason="просто потому что")
 def test_fail():
     user1 = random.randint(0, 100)
     user2 = random.randint(0, 100)
