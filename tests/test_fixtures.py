@@ -13,7 +13,9 @@ from selenium import webdriver
 @pytest.fixture(params=[(2560, 1440), (1920, 1080)])
 def desktop_dimension(request):
     width, height = request.param
-    browser.config.driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    browser.config.driver = webdriver.Chrome(options=options)
     browser.config.window_width = width
     browser.config.window_height = height
 
@@ -25,7 +27,9 @@ def desktop_dimension(request):
 @pytest.fixture(params=[(414, 896), (430, 932)])
 def mobile_dimension(request):
     width, height = request.param
-    browser.config.driver = webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    browser.config.driver = webdriver.Chrome(options=options)
     browser.config.window_width = width
     browser.config.window_height = height
 
