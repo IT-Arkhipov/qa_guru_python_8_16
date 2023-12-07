@@ -6,16 +6,19 @@ import time
 import pytest
 
 from page.sign_in import sign_in
-from selene import browser, be, have
+from selene import browser
 from selenium import webdriver
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 
 
 @pytest.fixture(params=[(2560, 1440), (1920, 1080)])
 def desktop_dimension(request):
     width, height = request.param
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    browser.config.driver = webdriver.Chrome(options=options)
+    # options = webdriver.ChromeOptions()
+    # options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    # browser.config.driver = webdriver.Chrome(options=options)
+    browser.config.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     browser.config.window_width = width
     browser.config.window_height = height
 
@@ -27,9 +30,9 @@ def desktop_dimension(request):
 @pytest.fixture(params=[(414, 896), (430, 932)])
 def mobile_dimension(request):
     width, height = request.param
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    browser.config.driver = webdriver.Chrome(options=options)
+    # options = webdriver.ChromeOptions()
+    # options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    browser.config.driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     browser.config.window_width = width
     browser.config.window_height = height
 
