@@ -15,9 +15,7 @@ from page.sign_in import sign_in
                 ids=['2560, 1440', '1920, 1080', '414, 896', '430, 932'])
 def browser_config(request):
     width, height = request.param
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    browser.config.driver = webdriver.Chrome(options=options)
+    browser.config.driver = webdriver.Firefox()
     browser.config.window_width = width
     browser.config.window_height = height
 
