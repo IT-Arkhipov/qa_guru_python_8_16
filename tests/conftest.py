@@ -10,13 +10,13 @@ from selenium.webdriver.chrome.options import Options
 from utils import attach
 
 
-def pytest_addoption(parser):
-    parser.addoption('--remote_url', default='')
-
-
 @pytest.fixture(scope='function', autouse=True)
 def load_env():
     load_dotenv()
+
+
+def pytest_addoption(parser):
+    parser.addoption('--remote_url', default=os.getenv('REMOTE_URL'))
 
 
 @pytest.fixture(scope='function', autouse=True)
@@ -35,7 +35,7 @@ def init_browser(request):
     password = os.getenv('PASSWORD')
     remote_url = request.config.getoption('--remote_url')
     driver = webdriver.Remote(
-        command_executor=f"https://{login}:{password}@{remote_url}",
+        command_executor=f"http://selenoid.autotests.cloud:4444/wd/hub",
         options=options
     )
 
